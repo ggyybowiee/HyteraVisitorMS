@@ -1,0 +1,106 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)">
+			<pane content="报警事件" active="true">
+				<div class="panel-body" style="padding: 20px 15px;">
+				    <div class="form-horizontal">
+				        <div class="form-group">
+				            <div class="col-sm-3" style="padding: 0;">
+				                <label for="alarmType" class="col-sm-3 control-label common-label">报警类型&nbsp;</label>
+				                <div class="col-sm-9" style="padding: 0;">
+    		                        <select ng-model="statisticQuery.alarmType" class="form-control" id="alarmType">
+        	                            <option value="">未选择</option>
+        	                            <option ng-repeat="item in alarmTypeList" value="{{item.type}}">{{item.text}}</option>
+        	                        </select>
+				                </div>
+				            </div>
+				            <div class="col-sm-3" style="padding: 0;">
+				                <label for="alarmType" class="col-sm-3 control-label common-label">时间类型&nbsp;</label>
+				                <div class="col-sm-9" style="padding: 0;">
+    		                        <select ng-model="statisticQuery.dateType" class="form-control" id="alarmType" ng-change="dateChange(statisticQuery.dateType)">
+        	                            <option value="">未选择</option>
+        	                            <option ng-repeat="item in dateTypeList" value="{{item.type}}">{{item.text}}</option>
+        	                        </select>
+				                </div>
+				            </div>
+				            <div class="col-sm-4" style="padding: 0;">
+				                <label class="col-sm-3 control-label common-label">开始时间&nbsp;</label>
+				                <div class="col-sm-9 input-group date" id="alarmEventStartTime">
+				                    <input type='text' class="form-control" ng-model="statisticQuery.alarmEventStartTime"/>
+				                    <span class="input-group-addon" id="alarmClear"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+				            <!-- <div class="col-sm-4" style="padding: 0;">
+				                <label class="col-sm-3 control-label common-label">结束时间&nbsp;</label>
+				                <div class="col-sm-9 input-group date" id="alarmEventEndTime">
+				                    <input type='text' class="form-control" ng-model="statisticQuery.alarmEventEndTime"/>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div> -->
+				            <div class="col-sm-2" style="padding: 0;">
+				                <div class="col-sm-12" style="padding: 0;text-align: center;">
+				                    <button class="btn btn-default" ng-click="alarmQuerySearch()">搜索</button>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="loader" style="margin-top: calc((100vh - 400px)/2);" ng-show="alarmLoading"></div>
+				<h4 class="searchNoResultTitle" ng-if="statisticQuery.alarmTotal == 0">暂无数据</h4>
+				<div class="alarmChart" id="alarmChart" ng-if="statisticQuery.alarmList.length > 0"></div>
+			</pane>
+			<pane content="访客事件" active="false"> 
+			  	<div class="panel-body" style="padding: 20px 15px;">
+				    <div class="form-horizontal">
+				        <div class="form-group">
+				            <div class="col-sm-3" style="padding: 0;">
+				                <label for="visitorReason" class="col-sm-3 control-label common-label">事由&nbsp;</label>
+				                <div class="col-sm-9" style="padding: 0;">
+    		                        <select ng-model="statisticQuery.visitorReason" class="form-control" id="visitorReason">
+        	                            <option value="">未选择</option>
+        	                            <option ng-repeat="item in visitorReasonList" value="{{item.reason}}">{{item.reason}}</option>
+        	                        </select>
+				                </div>
+				            </div>
+				            <div class="col-sm-3" style="padding: 0;">
+				                <label for="alarmType" class="col-sm-3 control-label common-label">时间类型&nbsp;</label>
+				                <div class="col-sm-9" style="padding: 0;">
+    		                        <select ng-model="statisticQuery.visitorDateType" class="form-control" id="alarmType" ng-change="visitorDateChange(statisticQuery.visitorDateType)">
+        	                            <option value="">未选择</option>
+        	                            <option ng-repeat="item in dateTypeList" value="{{item.type}}">{{item.text}}</option>
+        	                        </select>
+				                </div>
+				            </div>
+				            <div class="col-sm-4" style="padding: 0;">
+				                <label class="col-sm-3 control-label common-label">开始时间&nbsp;</label>
+				                <div class="col-sm-9 input-group date" id="visitorEventStartTime">
+				                    <input type='text' class="form-control" ng-model="statisticQuery.visitorEventStartTime"/>
+				                    <span class="input-group-addon" id="visitorClear"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+				            <!-- <div class="col-sm-4" style="padding: 0;">
+				                <label class="col-sm-3 control-label common-label">结束时间&nbsp;</label>
+				                <div class="col-sm-9 input-group date" id="visitorEventEndTime">
+				                    <input type='text' class="form-control" ng-model="statisticQuery.visitorEventEndTime"/>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div> -->
+				            <div class="col-sm-2" style="padding: 0;">
+				                <div class="col-sm-12" style="padding: 0;text-align: center;">
+				                    <button class="btn btn-default" ng-click="visitorQuerySearch()">搜索</button>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="loader" style="margin-top: calc((100vh - 400px)/2);" ng-show="visitorLoading"></div>
+				<h4 class="searchNoResultTitle" ng-if="statisticQuery.visitorTotal == 0">暂无数据</h4>
+				<div class="visitorChart" id="visitorChart" ng-if="statisticQuery.visitorList.length > 0"></div>
+			</pane>
+		</tabs>
+	</div>
+</div>

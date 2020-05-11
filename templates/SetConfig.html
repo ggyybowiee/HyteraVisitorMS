@@ -1,0 +1,73 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)"> 
+			<pane content="系统设置" active="true"> 
+			  <div>
+			  	<div class="noticeWrap clearfix">
+			  		<div class="noticeListWord">预约提醒设置</div>
+			  	</div>
+			  	<div class="panel-body" style="padding: 15px;">
+			  	    <div class="form-horizontal">
+			  	        <div class="form-group">
+			  	            <div class="col-sm-4" style="padding: 0;">
+			  	                <label for="aheadTime" class="col-sm-3 control-label common-label">提前&nbsp;</label>
+			  	                <div class="col-sm-6" style="padding: 0;">
+			  	                    <input type='number' class="form-control" id="aheadTime" ng-model="setConfig.aheadTime"/><span style="display: inline-block;"></span>
+			  	                </div>
+			  	                <label class="col-sm-3 control-label common-label" style="text-align: left !important;">&nbsp;(分钟)</label>
+			  	            </div>
+			  	            <div class="col-sm-4" style="padding: 0;">
+			  	                <label for="lateTime" class="col-sm-3 control-label common-label">迟到&nbsp;</label>
+			  	                <div class="col-sm-6" style="padding: 0;">
+			  	                    <input type='number' class="form-control" id="lateTime" ng-model="setConfig.lateTime"/>
+			  	                </div>
+			  	                <label class="col-sm-3 control-label common-label" style="text-align: left !important;">&nbsp;(分钟)</label>
+			  	            </div>
+			  	        </div>
+			  	    </div>
+			  	</div>
+			  	<hr style="border: 1px solid #ccc;">
+			  	<div class="noticeWrap clearfix">
+			  		<div class="noticeListWord">黑名单提醒设置</div>
+			  	</div>
+			  	<div class="panel-body" style="padding: 15px;">
+			  	    <div class="form-horizontal">
+			  	        <div class="form-group">
+			  	            <div class="col-sm-4" style="padding: 0;">
+			  	                <label for="alarmNum" class="col-sm-3 control-label common-label">报警次数&nbsp;</label>
+			  	                <div class="col-sm-6" style="padding: 0;">
+			  	                    <input type='number' class="form-control" id="alarmNum" ng-model="setConfig.alarmNum"/><span style="display: inline-block;"></span>
+			  	                </div>
+			  	                <label class="col-sm-3 control-label common-label" style="text-align: left !important;">&nbsp;(次)</label>
+			  	            </div>
+			  	        </div>
+			  	    </div>
+			  	</div>
+			  	<hr style="border: 1px solid #ccc;">
+			  	<div class="noticeWrap clearfix">
+			  		<div class="noticeListWord">低电量提醒设置</div>
+			  	</div>
+			  	<div class="panel-body" style="padding: 15px;">
+			  	    <div class="form-horizontal">
+			  	        <div class="form-group">
+			  	            <div class="col-sm-4" style="padding: 0;">
+			  	                <label for="alarmNum" class="col-sm-3 control-label common-label">电量&nbsp;</label>
+			  	                <div class="col-sm-6" style="padding: 0;">
+			  	                    <select ng-model="setConfig.battery" class="form-control" id="alarmNum">
+			  	                        <option ng-repeat="item in setConfig.batteryList" value="{{item.type}}" style="text-align: center;">{{item.text}}</option>
+			  	                    </select>
+			  	                </div>
+			  	            </div>
+			  	        </div>
+			  	    </div>
+			  	</div>
+			  </div>
+			  <div style="width: 100%; text-align: center; margin: 50px 0px 30px 0px;">
+			      <p class="errorMsg">{{errorMessage}}</p>
+			      <button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress()">保存</button>
+			      <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress()">取消</button>
+			  </div> 
+			</pane>
+		</tabs>
+	</div>
+</div>

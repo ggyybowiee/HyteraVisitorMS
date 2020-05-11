@@ -1,0 +1,100 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)">
+			<pane content="报警" active="true"> 
+			  	<div class="panel-body" style="padding-bottom: 0px;">
+			  	    <div class="form-horizontal">
+			  	    	<div class="form-group" style="margin-bottom: 20px;">
+			  	    		<div class="col-sm-3" style="padding: 0;">
+			  	    		    <label for="name" class="col-sm-3 control-label common-label">访客姓名&nbsp;</label>
+			  	    		    <div class="col-sm-9" style="padding: 0;">
+			  	    		        <input type='text' class="form-control" id="name" ng-model="alarmView.name"/>
+			  	    		    </div>
+			  	    		</div>
+			  	    	    <div class="col-sm-3" style="padding: 0;">
+			  	    	        <label class="col-sm-3 control-label common-label">开始时间&nbsp;</label>
+			  	    	        <div class="col-sm-9 input-group date" id="startTime">
+			  	    	            <input type='text' class="form-control" id="startTimeInput" ng-model="alarmView.startTime"/>
+			  	    	            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	    	            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			  	    	        </div>
+			  	    	    </div>
+			  	    	    <div class="col-sm-3" style="padding: 0;">
+			  	    	        <label class="col-sm-3 control-label common-label">结束时间&nbsp;</label>
+			  	    	        <div class="col-sm-9 input-group date" id="endTime">
+			  	    	            <input type='text' class="form-control" id="endTimeInput" ng-model="alarmView.endTime"/>
+			  	    	            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	    	            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			  	    	        </div>
+			  	    	    </div>
+			  	    	    <div class="col-sm-3" style="padding: 0;">
+			  	    		    <div class="col-sm-12" style="padding: 0;text-align: center;">
+			  	    		        <button class="btn btn-default" ng-click="alarmSearch()">搜索</button>
+			  	    		    </div>
+			  	    		</div>
+			  	    	</div>
+			  	    	<div class="form-group">
+			  	    		<div class="col-sm-3" style="padding: 0;">
+			  	    		    <label for="alarmType" class="col-sm-3 control-label common-label">报警类型&nbsp;</label>
+			  	    		    <div class="col-sm-9" style="padding: 0;">
+			  	    		        <select ng-model="alarmView.alarmType" class="form-control" id="alarmType">
+			  	    		            <option ng-repeat="item in alarmView.alarmTypeList" value="{{item.bind}}">{{item.type}}</option>
+			  	    		        </select>
+			  	    		    </div>
+			  	    		</div>
+			  	    	    <div class="col-sm-3" style="padding: 0;">
+			  	    	        <label for="alarmType" class="col-sm-3 control-label common-label">报警区域&nbsp;</label>
+			  	    	        <div class="col-sm-9" style="padding: 0;">
+			  	    	            <select ng-model="alarmView.railId" class="form-control" id="alarmType">
+			  	    	            	<option value="">未选择</option>
+			  	    	                <option ng-repeat="item in alarmRailList" value="{{item.railId}}">{{item.railName}}</option>
+			  	    	            </select>
+			  	    	        </div>
+			  	    	    </div>
+			  	    	</div>
+			  	        <p class="errorMsg">{{alarmView.errorMessage}}</p>
+			  	    </div>
+			  	</div>
+			  	<div class="table-responsive" style="margin-top: 10px;">
+			  		<div class="loader" style="margin-top: 20px;" ng-show="isLoading"></div>
+			  		<h4 class="searchNoResultTitle" ng-if="alarmView.serverPageCount == 0">暂无数据</h4>
+			  	    <table class="table table-hover" ng-if="alarmView.list.length > 0">
+			  	        <thead style="background: #dfdfdf;">
+			  	            <tr>
+			  	                <th>报警时间</th>
+			  	                <th>报警信息</th>
+			  	                <th>报警类型</th>
+			  	                <th>处理时间</th>
+			  	                <th>处理信息</th>
+			  	                <th>操作状态</th>
+			  	                <!-- <th>摄像头</th> -->
+			  	                <th>操作</th>
+			  	            </tr>
+			  	        </thead>
+			  	        <tbody>
+			  	            <tr ng-repeat="item in alarmView.list">
+			  	                <td>{{item.time}}</td>
+			  	                <td>{{item.alarmInfo}}</td>
+			  	                <td>{{item.alarmType}}</td>
+			  	                <td>{{item.handleTime}}</td>
+			  	                <td>{{item.handleInfo}}</td>
+			  	                <td><span class="label {{item.permClass}}">{{item.permString}}</span></td>
+			  	                <!-- <td>
+			  	                	<a href="javascript:void(0);" class="cameraImg" ng-click="cameraShow(item)" ng-if="item.handleTimeShow == null">视频联动</a>
+			  	                	<a href="javascript:void(0);" class="cameraImg" ng-click="cameraPlay(item)" ng-if="item.handleTimeShow != null">视频回放</a>
+			  	                	<button ng-repeat="monitor in item.monitorStatus" class="btn btn-default cameraImg" type="button" ng-click="CameraLook(monitor,item)" style="padding: 0 10px;">{{monitor.name}}</button>
+			  	                </td> -->
+			  	                <td>
+			  	                    <a href="javascript:void(0);" class="handle" ng-click="dealWith(item)" ng-if="item.status == 0">处理</a>
+			  	                </td>
+			  	            </tr>
+			  	        </tbody>
+			  	    </table>
+			  	    <div class="paginatorDiv" ng-hide="alarmView.list.length == 0">
+			  	        <ul id="alarmView-paginator"></ul>
+			  	    </div>
+			  	</div>
+			</pane>
+		</tabs>
+	</div>
+</div>

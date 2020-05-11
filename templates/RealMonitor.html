@@ -1,0 +1,108 @@
+<div id="realMonitorFengMap" class="{{isShowRealMonitorSearchPart ? 'defaultRealMonitorFengMap' : 'expandRealMonitorFengMap' }}">
+</div>
+<!-- <div id="realMonitorAlert" class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>警告！</strong>结果是错误的。
+</div> -->
+<!-- <div id="realMonitorAlert" class="alert alert-success fade in">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>成功！</strong>结果是成功的。
+</div> -->
+<span id="elecRail" ng-click="elecRailToggle()" class="{{isShowRail ? 'railBlack' : 'railBlue'}}"></span>
+<span id="expandIcon" ng-click="expand()" class="expandIcon {{isShowRealMonitorSearchPart ? 'defaultState' : 'expandState' }}"></span>
+<div class="realMonitorSearchPart {{!isShowRealMonitorSearchPart ? 'opacaty0' : 'opacaty1' }}" style="min-height: 303px;" ng-hide="!isShowRealMonitorSearchPart">
+    <div class="panel-body" style="padding: 20px 15px;padding-bottom: 0px;">
+        <div class="form-horizontal">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="realMonitorName" class="col-sm-4 control-label common-label">访客姓名&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <input type='text' class="form-control" id="realMonitorName" ng-model="realMonitor.name" />
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="employeeName" class="col-sm-4 control-label common-label">被访人姓名&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <input type='text' class="form-control" id="employeeName" ng-model="realMonitor.employeeName"/>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="realMonitorResult" class="col-sm-4 control-label common-label">性别&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <select ng-model="realMonitor.gender" class="form-control" id="realMonitorResult">
+                            <option value="">未选择</option>
+                            <option ng-repeat="item in sexType" value="{{item.binded}}">{{item.sex}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <div class="col-sm-12" style="padding: 0;text-align: center;">
+                        <button class="btn btn-default" ng-click="realMonitorSearch()">搜索</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="realMonitorResult" class="col-sm-4 control-label common-label">事由&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <select ng-model="realMonitor.reason" class="form-control" id="realMonitorResult">
+                            <option value="">未选择</option>
+                            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="mobileNumber" class="col-sm-4 control-label common-label">访客电话&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <input type='text' class="form-control" id="mobileNumber" ng-model="realMonitor.mobileNumber" />
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="certificateId" class="col-sm-4 control-label common-label">证件号&nbsp;</label>
+                    <div class="col-sm-8" style="padding: 0;">
+                        <input type='text' class="form-control" id="certificateId" ng-model="realMonitor.certificateId" />
+                    </div>
+                </div>
+            </div>
+            <p class="errorMsg" style="margin: 0px;">{{realMonitor.errorMessage}}</p>
+        </div>
+    </div>
+    <div class="table-responsive" style="padding: 0 15px;background-color: #fafafa;margin-top: 20px;">
+        <div class="loader" style="margin-top: 20px;" ng-show="isLoading"></div>
+        <h4 class="searchNoResultTitle" ng-if="realMonitor.serverPageCount == 0">暂无数据</h4>
+        <table class="table table-hover" style="margin-bottom: 0px;" ng-if="realMonitor.list.length > 0">
+            <thead style="background: #dfdfdf;">
+                <tr>
+                    <th>访客姓名</th>
+                    <th>性别</th>
+                    <th>来访事由</th>
+                    <th>到访时间</th>
+                    <th>被访人员</th>
+                    <th>访客电话</th>
+                    <th>证件号码</th>
+                    <th>权限</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in realMonitor.list">
+                    <td>{{item.name}}</td>
+                    <td>{{item.gender}}</td>
+                    <td>{{item.reason}}</td>
+                    <td>{{item.arrivalTime}}</td>
+                    <td>{{item.employeeName}}</td>
+                    <td>{{item.mobileNumber}}</td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.privilegeName}}</td>
+                    <td>
+                        <a href="javascript:void(0);" class="handle" ng-click="toTrack(item)" ng-if="item.isTrack">追踪</a>
+                        <a href="javascript:void(0);" class="handle" ng-click="cancleTrack(item)" ng-if="!item.isTrack">取消追踪</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="paginatorDiv" style="margin-bottom: 0px;" ng-hide="realMonitor.list.length == 0">
+            <ul id="realMonitor-paginator"></ul>
+        </div>
+    </div>
+</div>

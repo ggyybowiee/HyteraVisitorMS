@@ -1,0 +1,118 @@
+*{
+    margin:0;
+    padding:0;
+    font-size: 100%;
+    font-family: "PingHei", "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
+    vertical-align: baseline;
+    font-style: inherit;
+    font-weight: inherit;
+    border: 0;
+    outline: 0;
+}
+html{
+    width: 100vw;
+    height: 100vh;
+}
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-image: url(../../img/login/loginBG_nologo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+}
+.loginTitle{
+    display: inline-block;
+    font-size: 20px;
+    position: absolute;
+    left: 2%;
+    top: 2%;
+    letter-spacing:2.5px;
+    color: #fff;
+}
+.loginDialog{
+	width: 400px;
+	min-height: 400px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+    margin-top: -230px;
+    margin-left: -200px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0.2px 1px 32.8px 1px rgba(150, 226, 254, 0.62), 0.4px 0.1px 42.7px 0.2px rgba(15, 82, 158, 0.48);
+    box-shadow: 0.2px 1px 32.8px 1px rgba(150, 226, 254, 0.62), 0.4px 0.1px 42.7px 0.2px rgba(15, 82, 158, 0.48);
+    border-radius: 10px;
+}
+.formGroup{
+    height: 100%;
+    padding: 50px 40px;
+    box-sizing: border-box;
+}
+.formTitle{
+    text-align: center;
+    font-size: 22px;
+    color: #333;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing:2.5px;
+}
+.loginDialog .textField {
+    width: calc(100% - 50px);
+    display: block;
+    margin: 0 auto;
+    height: 44px;
+    line-height: 44px;
+    font-size: 14px;
+    padding-left: 50px;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    background-color: #f6f6f6;
+    border: 2px solid #f6f6f6;
+    letter-spacing: 2.5px;
+}
+#loginAccount{
+    margin-top: 50px;
+    background-image: url(../../img/login/username_ico.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    font-size: 16px;
+}
+#loginAccount:focus{
+    background-image: url(../../img/login/username_ico_s.png);
+    border: 2px solid #88d3f2;
+    color: #88d3f2;
+}
+#loginPwd{
+    margin-top: 35px;
+    background-image: url(../../img/login/pwd_ico.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    font-size: 16px;
+}
+#loginPwd:focus{
+    background-image: url(../../img/login/pwd_ico_s.png);
+    border: 2px solid #88d3f2;
+    color: #88d3f2;
+}
+.loginDialog .login-button {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #1d65b7;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-top: 80px;
+    /*background-image: url(../../img/login/login-btn-bg.png);*/
+    background-color: rgba(17, 187, 250, 1);
+    -webkit-box-shadow: 0px 1px 3px 1px rgba(150, 226, 254, 0.54), 0px 2px 40.7px 8.3px rgba(11, 98, 185, 0.09), 0px 2px 27.5px 1.5px rgba(10, 63, 117, 0.15);
+    box-shadow: 0px 1px 3px 1px rgba(150, 226, 254, 0.54), 0px 2px 40.7px 8.3px rgba(11, 98, 185, 0.09), 0px 2px 27.5px 1.5px rgba(10, 63, 117, 0.15);
+}

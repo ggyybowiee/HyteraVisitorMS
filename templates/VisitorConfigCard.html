@@ -1,0 +1,92 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-12 visitorConfigSearch">
+            <input type="text" name="text" placeholder="输入访客牌号码" ng-model="visitorCardSearchContent" id="visitorCardSearchContent">
+             <!-- ng-change="visitorCardChange(visitorCardSearchContent)" -->
+            <span class="glyphicon glyphicon-search" ng-click="visitorCardSearchPress(visitorCardSearchContent)"></span>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <div class="col-sm-12 clearfix">
+            <div style="float: left;">
+                <label for="status" class="control-label common-label">状态</label>
+                <select ng-model="visitorCard.status" ng-change="visitorCardStatusPress(visitorCard.status)" class="form-control" id="status" style="display: inline-block;width: auto;">
+                    <option ng-repeat="item in visitorCard.statusList" value="{{item.binded}}">{{item.status}}</option>
+                </select>
+                <label for="binded" class="control-label common-label" style="margin-left: 20px;">是否绑定人员</label>
+                <select ng-model="visitorCard.binded" ng-change="isBindedPerson(visitorCard.binded)" class="form-control" id="binded" style="display: inline-block;width: auto;">
+                    <option ng-repeat="item in visitorCard.bindedList" value="{{item.binded}}">{{item.status}}</option>
+                </select>
+            </div>
+            <div style="float: right;">
+                <a href="javascript:void(0);" class="handle handle-black" style="margin-right: 20px;" ng-click="batchAddPress()">批量导入</a>
+                <!-- <button class="btn btn-primary" style="padding: 6px 20px;margin-right: 10px;" ng-click="batchAddPress()"></span>批量导入</button> -->
+                <a href="javascript:void(0);" class="handle handle-delete" style="margin-right: 20px;" ng-click="batchDeletePress()" ng-if="visitorCard.list.length > 0">删除</a>
+                <!-- <button class="btn btn-danger" style="padding: 6px 20px;margin-right: 10px;" ng-click="batchDeletePress()" ng-if="visitorCard.list.length > 0">删除</button> -->
+                <button class="btn btn-primary" style="padding: 6px 20px;" ng-click="addPress()"><span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>新建</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive" style="margin-top: 20px;">
+    <div class="loader" style="margin-top: 0;" ng-show="isLoading"></div>
+    <h4 class="searchNoResultTitle" ng-if="visitorCard.serverPageCount == 0">暂无数据</h4>
+    <table class="table table-hover" ng-if="visitorCard.list.length > 0">
+        <thead style="background: #dfdfdf;">
+            <tr>
+                <th>标签号</th>
+                <th>绑定人姓名</th>
+                <th>电量</th>
+                <th>状态</th>
+                <th>操作&nbsp;&nbsp;
+                    <label for="selectAll" style="margin-bottom: 0px;">
+                    <input type="checkbox" id="selectAll" style="vertical-align: top;" ng-click="selectAll()"> 全选</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in visitorCard.list">
+                <td>{{item.sn}}</td>
+                <td>{{item.bindName}}</td>
+                <td><span class="label {{item.battery == 0 ? 'label-danger':'label-default'}}">{{item.batteryText}}</span></td>
+                <td>
+                    <span class="label {{item.permClass}}">{{item.permString}}</span>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="item.selected" style="vertical-align: inherit;">
+                    </span>&nbsp;&nbsp;
+                    <a href="javascript:void(0);" class="handle" ng-click="visitorUnbind(item, $index)" ng-if="item.binded == 1">解绑</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="errorMsg" style="text-align: center;margin: 0;">{{visitorCard.errorMessage}}</p>
+    <div class="paginatorDiv" ng-hide="visitorCard.list.length == 0">
+        <ul id="visitorCard-paginator"></ul>
+    </div>
+</div>
+
+<div class="modal fade" id="addBatchSn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">批量添加访客牌</h4>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 20px;">
+            <input type="file" style="width: 70px;display: none;" id="file" name="file" class="file" onchange="angular.element(this).scope().handleFiles(this)"/>
+            <button type="button" class="btn btn-default" id="addDeviceButton" ng-click="upDownloadFile()">上传文件(.xls)</button><span id="text" style="padding:0 12px;line-height: 36px;"></span>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <button type="button" class="btn btn-default" id="addDeviceButton" ng-click="downLoadTemplate()">下载模板</button>
+        </div>
+        <p class="errorMsg">{{errorMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="submit()">提交</button>
+      </div>
+    </div>
+  </div>
+</div>

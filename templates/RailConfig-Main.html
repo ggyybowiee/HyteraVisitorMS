@@ -1,0 +1,49 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-12 visitorConfigSearch">
+            <input type="text" name="text" placeholder="输入区域名称" ng-model="railSearchContent" ng-keyup="enterEvent($event)">
+            <span class="glyphicon glyphicon-search" ng-click="railSearchPress(railSearchContent)"></span>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <div class="col-sm-12 clearfix">
+            <div style="float: left;">
+                <label for="floorNo" class="control-label common-label">所属楼层</label>
+                <select ng-model="railConfig.floorNo" ng-change="railConfigfloorNoPress(railConfig.floorNo)" class="form-control" id="floorNo" style="display: inline-block;width: auto;">
+                    <option value="">未选择</option>
+                    <option ng-repeat="item in railConfig.floorList" value="{{item}}">{{item}}</option>
+                </select>
+            </div>
+            <div style="float: right;">
+                <button class="btn btn-primary" style="padding: 6px 20px;" ng-click="addPress()"><span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>新建</button>
+            </div>
+        </div>
+    </div>
+    <p class="errorMsg">{{railConfig.errorMessage}}</p>
+</div>
+<div class="table-responsive">
+    <div class="loader" style="margin-top: 0;" ng-show="isLoading"></div>
+    <h4 class="searchNoResultTitle" ng-if="railConfig.serverPageCount == 0">暂无数据</h4>
+    <table class="table table-hover" ng-if="railConfig.list.length > 0">
+        <thead style="background: #dfdfdf;">
+            <tr>
+                <th>区域名称</th>
+                <th>所属楼层</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in railConfig.list">
+                <td>{{item.railName}}</td>
+                <td>{{item.floorNo}}</td>
+                <td>
+                    <a href="javascript:void(0);" class="handle handle-delete" ng-click="railConfigDeletePress(item, $index)">删除</a>&nbsp;&nbsp;
+                    <a href="javascript:void(0);" class="handle" ng-click="railConfigEditPress(item, $index)">编辑</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="paginatorDiv" ng-hide="railConfig.list.length == 0">
+        <ul id="railConfig-paginator"></ul>
+    </div>
+</div>

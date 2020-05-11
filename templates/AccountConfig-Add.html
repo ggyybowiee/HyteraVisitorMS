@@ -1,0 +1,40 @@
+<div class="js-content accountConfig">
+    <h3 class="js-content-title">新建账户</h3>
+    <button type="button" class="btn btn-default" aria-label="Close" style="margin-top: -130px;margin-left: 30px;" ng-click="navBackPress();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+
+    <div class="form-horizontal">
+    	<div class="form-group">
+    		<label class="col-sm-3 col-md-2 control-label" for="username">账户名称<span class="errorMsg"> *</span></label>
+    		<div class="col-sm-9">
+    			<input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="账户名称" ng-model="accountObj.username" id="username">
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label class="col-sm-3 col-md-2 control-label" for="password">账户密码<span class="errorMsg"> *</span></label>
+    		<div class="col-sm-9">
+    			<input type="password" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="账户密码" ng-model="accountObj.password" id="password">
+    		</div>
+    	</div>
+    	<div class="form-group" ng-repeat="date in accountObj.list">
+    		<label class="col-sm-3 col-md-2 control-label"><span ng-if="$index == 0">权限选择<span class="errorMsg"> *</span></span></label>
+    		<div class="col-sm-9">
+    			<label class="checkbox-inline" style="margin-right: 10px;">
+    			    <input type="checkbox" value="{{date.index}}" ng-checked="date.selected" ng-click="cameraChanged(date)"><span style="margin:0;word-break: break-all;">{{date.content}}</span>
+    			</label>
+    		</div>
+    	</div>
+        <div class="form-group" ng-repeat="item in buildingList">
+            <label class="col-sm-3 col-md-2 control-label"><span ng-if="$index == 0">建筑选择<span class="errorMsg"> *</span></span></label>
+            <div class="col-sm-9">
+                <label class="checkbox-inline" style="margin-right: 10px;">
+                    <input type="checkbox" value="{{item.buildId}}" ng-checked="item.selected" ng-click="cameraChanged(item)"><span style="margin:0;word-break: break-all;">{{item.buildName}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; text-align: center; margin-bottom: 40px;margin-top: 50px;">
+        <p class="errorMsg" ng-bind="errorMessage"></p>
+        <button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress();">保存</button>
+        <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress();">取消</button>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="form-horizontal">
+	<div class="form-group" style="margin: 20px 0px;">
+		<div class="col-sm-12">
+		    <div class="col-sm-4" style="padding: 0;">
+		        <label for="visitorName" class="col-sm-3 control-label common-label">访客姓名&nbsp;</label>
+		        <div class="col-sm-9" style="padding: 0;">
+		            <input type='text' class="form-control" id="visitorName" ng-model="noticeQuery.visitorName"/>
+		        </div>
+		    </div>
+		    <div class="col-sm-4" style="padding: 0;">
+		        <label for="certificateId" class="col-sm-3 control-label common-label">证件号&nbsp;</label>
+		        <div class="col-sm-9" style="padding: 0;">
+		            <input type='text' class="form-control" id="certificateId" ng-model="noticeQuery.certificateId"/>
+		        </div>
+		    </div>
+		    <div class="col-sm-3" style="padding: 0;">
+		        <label for="status" class="col-sm-3 control-label common-label">状态&nbsp;</label>
+		        <div class="col-sm-9" style="padding: 0;">
+		            <select ng-model="noticeQuery.status" class="form-control" id="status" ng-change="statusChangePress(noticeQuery.status)">
+		                <option ng-repeat="item in noticeQuery.statusList" value="{{item.binded}}">{{item.status}}</option>
+		            </select>
+		        </div>
+		    </div>
+		    <div class="col-sm-1" style="padding: 0;">
+		    	<div class="col-sm-12" style="padding: 0;text-align: right;">
+		    	    <button class="btn btn-default" ng-click="noticeSearchPress()">搜索</button>
+		    	</div>
+		    </div>
+	    </div>
+	</div>
+   	<div class="form-group clearfix" style="margin-top: 10px;">
+   		<div class="col-sm-12 clearfix">
+   			<div style="float: left;">
+	          	<p class="errorMsg">{{noticeQuery.errorMessage}}</p>
+        	</div>
+   			<div style="float: right;">
+   				<button class="btn btn-primary" style="padding: 6px 20px;" ng-click="addPress()"><span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>新建</button>
+   			</div>
+   		</div>
+    </div>
+</div>
+<div class="table-responsive" style="margin-top: 10px;">
+	<div class="loader" style="margin-top: 20px;" ng-show="isLoading"></div>
+	<h4 class="searchNoResultTitle" ng-if="noticeQuery.serverPageCount == 0">暂无数据</h4>
+	<table class="table table-hover" ng-if="noticeQuery.list.length > 0">
+		<thead style="background: #dfdfdf;">
+			<tr>
+				<th>访客姓名</th>
+				<th>性别</th>
+				<th>来访人数</th>
+				<th>来访事由</th>
+				<th>证件号码</th>
+				<th>访客电话</th>
+				<th>被访人员</th>
+				<th>被访部门</th>
+				<th>预约时间</th>
+				<th>停留时间/小时</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="notice in noticeQuery.list">
+				<td>{{notice.visitorName}}</td>
+				<td>{{notice.gender}}</td>
+				<td>{{notice.nums}}</td>
+				<td>{{notice.reason}}</td>
+				<td>{{notice.certificateId}}</td>
+				<td>{{notice.visitorMobilePhone}}</td>
+				<td>{{notice.employeeName}}</td>
+				<td>{{notice.dept}}</td>
+				<td>{{notice.appointTime}}</td>
+				<td>{{notice.stopHour}}</td>
+				<td><span class="label {{notice.statusClass}}">{{notice.statusString}}</span></td>
+				<td>
+					<a href="javascript:void(0);" class="handle" ng-click="noticeHandle(notice,$index)" ng-if="notice.status == 0">登记</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paginatorDiv" ng-hide="noticeQuery.list.length == 0">
+	    <ul id="noticeList-paginator"></ul>
+	</div>
+</div>

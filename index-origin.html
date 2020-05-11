@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海能达访客管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/sweetalert.css">
+    <link rel="stylesheet" href="lib/animate.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- endinject -->
+</head>
+<body ng-app="app" ng-controller="NavigationCtrl" ng-cloak>
+<nav class="navbar navbar-default headNav" style="margin: 0;height: 50px;background: #fafafa;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#xs-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="font-size: 22px; color: #000000">海能达访客管理系统</a>
+        </div>
+        <div class="collapse navbar-collapse sm-navbar" id="xs-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav nav-list" style="display: none;">
+                    <li class="{{m.selected ? 'active' : '' }}" ng-repeat="m in menu"><a href="" ng-click="leftSideMenuClick(m);">{{m.name}}</a></li>
+                </ul>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{userName}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" ng-click="logoutPress()">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="height: calc(100vh - 51px);background: #fff;display: flex;width: 100%;box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);" class="clearfix">
+	<div class="left-nav-menu">
+	    <ul>
+	        <li ng-repeat="m in menu" style="background-image: url({{m.icon}});" class="{{m.selected ? 'menuSelected' : '' }}" ng-click="leftSideMenuClick(m)">
+	            <span ng-bind="m.name"></span>
+	        </li>
+	    </ul>
+	</div>
+	<div ui-view="" class="menuMainView"></div>
+</div>
+
+<!-- tools -->
+<script src="lib/jquery.min.js"></script>
+<script src="lib/sweetalert.min.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.min.js"></script>
+<script src="lib/echarts.common.min.js"></script>
+<script src="js/tools/HttpErrorCodeProcess.js"></script>
+<script src="js/tools/util.js"></script>
+<script src="js/tools/ajaxfileupload.js"></script>
+
+<!--angular js-->
+<script src="lib/angular/angular.1.5.3.min.js"></script>
+<script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<!-- oclazyload -->
+<script src="lib/oclazyload/src/ocLazyLoad.min.js"></script>
+
+<!-- fengmap -->
+<script src="lib/fengmap/fengmap.min-v2.0.19-nologo.js"></script>
+<script src="lib/fengmap/layerGroup.js"></script>
+<script src="lib/fengmap/createBubble.js"></script>
+
+<!--datetimepicker-->
+<link rel="stylesheet" href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<!-- 海康插件 -->
+<script src="lib/codebase/webVideoCtrl.js"></script>
+
+<!-- inject:js -->
+<script src="js/app.js"></script>
+<script src="js/service.js"></script>
+<script src="js/NavigationController.js"></script>
+<script src="js/HomeController.js"></script>
+<script src="js/MapController.js"></script>
+<script src="js/SetController.js"></script>
+<!-- endinject -->
+</body>
+</html>

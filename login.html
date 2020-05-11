@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>海能达访客管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="lib/sweetalert.css">
+	<link rel="stylesheet" href="css/login/login.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="LoginCtrl">
+	<span class="loginTitle">Joysuch访客登记定位系统</span>
+	<div class="loginDialog">
+    	<div class="formGroup">
+    		<p class="formTitle">访客登记定位系统</p>
+	        <input name="username" value="" placeholder="用户名" class="textField" id="loginAccount" ng-model="user.username" ng-keyup="enterEvent($event)">
+	        <input name="password" type="password" value="" placeholder="密码" class="textField" id="loginPwd" ng-keyup="enterEvent($event)" ng-model="user.password">
+	        <button class="login-button" ng-click="login()" ng-if="!isLoading">
+	        	登录
+	        </button>
+	        <button class="login-button" ng-if="isLoading">
+	        	<embed src="img/ring-alt.svg" width="40" height="40" type="image/svg+xml" style="vertical-align: middle;margin:0 10px;" />
+	        </button>
+        </div>
+	</div>
+
+	<div class="modal fade" id="selectBuilding" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header" style="border: none;padding: 15px 15px;">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            </div>
+	            <div class="modal-body" style="padding: 20px;display: flex;">
+	            	<label for="buildId" class="control-label common-label" style="font-weight: bold;">请选择选择建筑信息&nbsp;</label>
+                    <select ng-model="user.buildId" class="form-control" id="buildId" style="width: 280px;">
+                        <!-- <option value="">未选择</option> -->
+                        <option ng-repeat="item in user.buildList" value="{{item.buildId}}">{{item.buildName}}</option>
+                    </select>
+	            </div>
+	            <div class="modal-footer" style="border: none;text-align: center;padding: 30px 20px;">
+	                <button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-primary" ng-click="savePress()">确定</button>
+	                <button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/angular/angular.1.5.3.min.js"></script>
+	<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="lib/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('myApp',[]);
+		app.controller('LoginCtrl', ['$scope','$timeout', function($scope, $timeout) {
+			$scope.isLoading = false;
+			$scope.user = {
+				username: "",
+				password: "",
+				buildId: "",
+				buildList: null
+			};
+
+			var userSelectedObj = JSON.parse(localStorage.getItem('selectCondition'));
+
+			/*$('#selectBuilding').modal({backdrop: 'static', keyboard: false});
+			$("#selectBuilding").modal('show');*/
+
+			//按下enter
+			$scope.enterEvent = function(e) {
+		        var keycode = window.event?e.keyCode:e.which;
+		        if(keycode==13){
+		            $scope.login();
+		        }
+		    };
+
+			//登录
+			$scope.login = function () {
+				if (!$scope.user.username) {
+					swal({
+						title: "警告",
+						text: "用户名不能为空",
+						type: "error"
+					}, function () {
+						setTimeout(function () {
+							loginAccount.focus();
+						},100);
+					});
+					return;
+				}
+				else if (!$scope.user.password) {
+					swal({
+						title: "警告",
+						text: "密码不能为空",
+						type: "error"
+					}, function () {
+						setTimeout(function () {
+							loginPwd.focus();
+						},100);
+					});
+					return;
+				}
+				else{
+					$scope.isLoading = true;
+					$.ajax({
+					    url : "/doLogin",
+					    async : false,
+					    type : 'POST',
+					    data:{
+					        username:$scope.user.username,
+					        password:$scope.user.password
+					    },
+					    success : function(data,status,headers){
+					    	if (data.errorCode == 0) {
+					    		
+					    		if (data.data.length > 1) {
+					    			if (userSelectedObj != null) {
+					    				if ($scope.user.username == userSelectedObj.username) {
+					    					$scope.user.buildId = userSelectedObj.buildId;
+					    					localStorage.removeItem('clickCondition');
+					    				}
+					    			}
+					    			else{
+					    				$scope.user.buildId = data.data[0].buildId;
+					    			}
+					    			$scope.user.buildList = data.data;
+					    			$('#selectBuilding').modal({backdrop: 'static', keyboard: false});
+					    			$("#selectBuilding").modal('show');
+					    		}
+					    		else if(data.data.length == 1){
+					    			$.ajax({
+					    			    url : "/choose/build",
+					    			    async : false,
+					    			    type : 'GET',
+					    			    data:{
+					    			        buildId: data.data[0].buildId
+					    			    },
+					    			    success : function(data,status,headers){
+					    			    	location.href = "http://" + window.location.host + "/index.html";
+					    			    },
+					    			    error : function(err) {
+					    			       
+					    			    }
+					    			});
+					    		}
+					    	}
+					    	else{
+					    		swal("警告", data.errorMsg.join(","), "error");
+					    	}
+					    	$scope.isLoading = false;
+					    },
+					    error : function(err) {
+					        console.log(err);
+					    }
+					});
+				}	
+			};
+
+			//确定
+			$scope.savePress = function () {
+				if ($scope.user.buildId == "") {
+					swal("警告", "请选择建筑", "error");
+					return;
+				}
+				var selectCondition = {
+					username:$scope.user.username,
+					buildId: $scope.user.buildId
+				};
+				localStorage.setItem('selectCondition', JSON.stringify(selectCondition));
+
+				$.ajax({
+				    url : "/choose/build",
+				    async : false,
+				    type : 'GET',
+				    data:{
+				        buildId:$scope.user.buildId
+				    },
+				    success : function(data,status,headers){
+				    	location.href = "http://" + window.location.host + "/index.html";
+				    },
+				    error : function(err) {
+				       
+				    }
+				});
+			};
+		}]);
+
+	</script>
+</body>
+</html>

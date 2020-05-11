@@ -1,0 +1,621 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)"> 
+		    <pane content="登入" active="true">
+		    	<div class="panel panel-default">
+		    	    <div class="panel-heading">
+		    	        1.被访人员
+		    	    </div>
+		    	    <div class="panel-body">
+		    	        <div class="form-horizontal">
+		    	            <div class="form-group">
+		    	                <div class="col-sm-2 col-width-20" style="padding: 0;">
+		    	                    <label for="visitedName" class="col-sm-3 control-label common-label">姓名<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <input type='text' class="form-control" id="visitedName" ng-model="login.employeeName"/>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-2 col-width-20" style="padding: 0;">
+		    	                    <label for="deptName" class="col-sm-3 control-label common-label">部门&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                    	<input type='text' class="form-control" id="deptName" ng-model="login.dept"/>
+		    	                        </select>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-2 col-width-20" style="padding: 0;">
+		    	                    <label for="roomNo" class="col-sm-3 control-label common-label">房间&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <input type='text' class="form-control" id="roomNo" ng-model="login.room"/>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-2 col-width-20" style="padding: 0;">
+		    	                    <label for="extPhone" class="col-sm-3 control-label common-label">分机&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <input type='text' class="form-control" id="extPhone" ng-model="login.extension"/>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-2 col-width-20" style="padding: 0;">
+		    	                    <label for="mobilePhone" class="col-sm-3 control-label common-label">手机&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <input type='text' class="form-control" id="mobilePhone" ng-model="login.employeeMobilePhone"/>
+		    	                    </div>
+		    	                </div>
+		    	            </div>
+		    	        </div>
+		    	    </div>
+		    	</div>
+		    	<div class="panel panel-default">
+		    	    <div class="panel-heading">
+		    	        2.来访内容
+		    	    </div>
+		    	    <div class="panel-body">
+		    	        <div class="form-horizontal">
+		    	            <div class="form-group">
+		    	            	<div class="col-sm-3" style="padding: 0;">
+		    	            	    <label for="permission" class="col-sm-3 control-label common-label">访客权限<span class="errorMsg"> *</span>&nbsp;</label>
+		    	            	    <div class="col-sm-9" style="padding: 0;">
+		    	            	        <select ng-model="login.privilegeId" class="form-control" id="permission">
+		    	            	        	<option value="">未选择</option>
+		    	            	            <option ng-repeat="item in permissionList" value="{{item.id}}">{{item.name}}</option>
+		    	            	        </select>
+		    	            	    </div>
+		    	            	</div>
+		    	                <div class="col-sm-3" style="padding: 0;">
+		    	                    <label for="visitorNum" class="col-sm-3 control-label common-label">来访人数<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <input type='number' class="form-control" id="visitorNum" ng-model="login.nums"/>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-3" style="padding: 0;">
+		    	                    <label for="visitorResult" class="col-sm-3 control-label common-label">来访事由<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                    <div class="col-sm-9" style="padding: 0;">
+		    	                        <select ng-model="login.reason" class="form-control" id="visitorResult">
+		    	                            <option value="">未选择</option>
+		    	                            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+		    	                        </select>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-3" style="padding: 0;">
+		    	            	    <label for="visitorType" class="col-sm-3 control-label common-label">人员类型&nbsp;</label>
+		    	            	    <div class="col-sm-9" style="padding: 0;">
+		    	            	        <select ng-model="login.personType" class="form-control" id="visitorType">
+		    	            	            <option value="">未选择</option>
+		    	            	            <option ng-repeat="item in visitorTypeList" value="{{item.type}}">{{item.type}}</option>
+		    	            	        </select>
+		    	            	    </div>
+		    	            	</div>
+		    	            </div>
+		    	            <div class="form-group" style="margin-top: 20px;">
+		    	                <div class="col-sm-3" style="padding: 0;" ng-if="login.id != null">
+		    	                    <label class="col-sm-3 control-label common-label" for="reservationTime">预约时间<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                    <div class="col-sm-9 input-group date" id="reservationTime">
+		    	                        <input type='text' class="form-control" id="reservationTimeInput" ng-model="login.appointTime" ng-disabled="login.id != null"/>
+		    	                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+		    	                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-3" style="padding: 0;">
+		    	                    <label class="col-sm-3 control-label common-label" for="stopTime">停留时间<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                    <div class="col-sm-9 input-group date" id="stopTime">
+		    	                        <div class="col-sm-6" style="padding: 0;">
+		    	                            <input type='number' class="form-control" id="stopTime" ng-model="login.stopHour"/><span style="display: inline-block;"></span>
+		    	                        </div>
+		    	                        <label class="col-sm-3 control-label common-label" style="text-align: left !important;">&nbsp;(h)</label>
+		    	                    </div>
+		    	                </div>
+		    	            </div>
+		    	        </div>
+		    	    </div>
+		    	</div>
+		    	<div class="panel panel-default">
+		    	    <div class="panel-heading" style="position: relative;">
+		    	        3.来访人员<span class="errorMsg"> *</span>
+		    	        <span class="glyphicon {{ isListShow ? 'glyphicon-th-large' : 'glyphicon-th-list' }} visitorIcon" ng-click="toggleList();">
+		    	    </div>
+		    	    <div class="panel-body" style="padding: 0px 5px;">
+		    	        <div class="form-horizontal" ng-if="isListShow">
+		    	            <div class="form-group">
+		    	                <div class="col-sm-2 col-width-auto" ng-repeat="item in login.visitorList" style="padding: 10px;">
+		    	                    <div class="bgStyle">
+		    	                        <p style="margin-bottom: 20px;">
+		    	                            <span class="visitorState" ng-bind="$index + 1"></span>
+		    	                            <span class="glyphicon glyphicon-remove closeIcon" ng-click="deleteVisitorPress($index)">
+		    	                        </p>
+		    	                        <div class="form-group" style="margin-bottom: 20px;">
+		    	                            <label for="name" class="col-sm-3 control-label common-label">姓名<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                                <input type="text" id="name" class="form-control" ng-model="item.name" ng-disabled="item.disabled">
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <div class="form-group" style="margin-bottom: 20px;">
+		    	                            <label for="sex" class="col-sm-3 control-label common-label">性别<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                                <select ng-model="item.gender" class="form-control" id="sex" ng-disabled="item.disabled">
+		    	                            	    <option value="">未选择</option>
+		    	                            	    <option ng-repeat="t in sexType" value="{{t.binded}}">{{t.sex}}</option>
+		    	                            	</select>
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <div class="form-group" style="margin-bottom: 20px;">
+		    	                            <label for="IDType" class="col-sm-3 control-label common-label">证件类型<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                            	<select ng-model="item.certificateType" class="form-control" id="IDType" ng-disabled="item.disabled">
+		    	                            	    <option ng-repeat="t in IDTypeList" value="{{t.type}}">{{t.type}}</option>
+		    	                            	</select>
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <div class="form-group" style="margin-bottom: 20px;">
+		    	                            <label for="IDNo" class="col-sm-3 control-label common-label">证件号<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                                <input type="text" id="IDNo" class="form-control" ng-model="item.certificateId" ng-disabled="item.disabled">
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <div class="form-group" style="margin-bottom: 20px;">
+		    	                            <label for="labelMac{{$index}}" class="col-sm-3 control-label common-label">访客牌号<span class="errorMsg"> *</span>&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                                <input type="text" class="form-control" ng-model="item.labelMac" id="labelMac{{$index}}" ng-change="labelMacChange($index,item.labelMac)" ng-keydown="keyDownEvent($index,$event)">
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <div class="form-group">
+		    	                            <label for="mobileNumber" class="col-sm-3 control-label common-label">手机号码&nbsp;</label>
+		    	                            <div class="col-sm-8" style="padding-left: 0;">
+		    	                                <input type="text" id="mobileNumber" class="form-control" ng-model="item.mobileNumber">
+		    	                            </div>
+		    	                            <div class="col-sm-1"></div>
+		    	                        </div>
+		    	                        <embed id="RoutonReader" type="application/mozilla-npruntime-scriptable-plugin" width="1" height="1" />
+		    	                        <div class="form-group">
+		    	                            <div class="rows clearfix" style="padding:0;margin: 0 auto;text-align: center;display: flex;">
+		    	                                <div class="squareBlock imgPic" ng-click="scanIDCardPress(item, $index)">
+		    	                                	<span>读取证件照</span>
+		    	                                	<img src="" height="94" id="IDCard{{$index}}" style="vertical-align: middle;position: absolute;display: block;left: 25px;">
+		    	                                </div>
+		    	                                <div class="squareBlock camera" ng-click="scanImgPress(item, $index)" title="拍摄照片">
+		    	                                	<img src="" width="125" id="scanImg{{$index}}">
+		    	                                </div>
+		    	                            </div>
+		    	                        </div>
+		    	                    </div>
+		    	                </div>
+		    	                <div class="col-sm-2 col-width-auto" style="padding: 10px;">
+		    	                    <div class="bgStyle">
+		    	                    	<span class="visitorState" ng-bind="login.visitorList.length + 1" style="background-color: #ddd;"></span>
+		    	                        <span class="addIcon" ng-click="addVisitorPress()"><span style="display: block;text-align: center;margin-top: 70px;color: #ccc;">添加访客</span></span>
+		    	                    </div>
+		    	                </div>
+		    	            </div>
+		    	        </div>
+		    	        <div class="table-responsive" style="padding: 10px;" ng-if="!isListShow">
+		    	            <table class="table table-hover">
+		    	                <thead style="background: #dfdfdf;">
+		    	                    <tr>
+		    	                        <th>姓名</th>
+		    	                        <th>性别</th>
+		    	                        <th>证件类型</th>
+		    	                        <th>证件号</th>
+		    	                        <th>访客牌号码</th>
+		    	                        <th>手机号码</th>
+		    	                    </tr>
+		    	                </thead>
+		    	                <tbody>
+		    	                    <tr ng-repeat="item in login.visitorList">
+		    	                        <td>{{item.name}}</td>
+		    	                        <td>{{item.gender}}</td>
+		    	                        <td>{{item.certificateType}}</td>
+		    	                        <td>{{item.certificateId}}</td>
+		    	                        <td>{{item.labelMac}}</td>
+		    	                        <td>{{item.mobileNumber}}</td>
+		    	                    </tr>
+		    	                </tbody>
+		    	            </table>
+		    	        </div>
+		    	    </div>
+		    	</div>
+		    	<div style="width: 100%; text-align: center; margin: 50px 0px 30px 0px;">
+		    	    <p class="errorMsg">{{login.errorMessage}}</p>
+		    	    <button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress()">保存</button>
+		    	    <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress()">取消</button>
+		    	</div>
+		    </pane> 
+		    <pane content="登出" active="false"> 
+	      		<p class="boldP">手动解绑登出</p>
+	      		<div class="form-horizontal" style="margin-bottom: 25px;">
+		  	        <div class="form-group">
+		  	            <div class="col-sm-12">
+	  	                    <input type="text" class="form-control" name="IDCardOrSn" placeholder="输入标签号/证件号" ng-model="logout.keyword" style="width: 300px;display: inline-block;float: left;margin-right: 20px;">
+	  	                    <button class="btn btn-primary" style="width: 80px;margin-right: 20px;" ng-click="unbindSN()">解绑</button>
+	  	                    <span class="errorMsg" style="vertical-align: -webkit-baseline-middle;">{{logout.errorMessage}}</span>
+		  	            </div>
+		  	        </div>
+		  	    </div>
+	      		<p class="boldP">请刷身份证解绑</p>
+	      		<div class="form-horizontal">
+		  	        <div class="form-group" style="padding: 0px 10px;">
+		  	        	<embed id="idCardReader" type="application/mozilla-npruntime-scriptable-plugin" width="1" height="1" />
+		  	            <div class="unbindSn idcard" ng-click="unbindIDCard()">
+		  	            	<a href="javascript:void(0);">刷身份证解绑</a>
+		  	            </div>
+		  	            <!-- <div class="unbindSn scan" ng-click="unbindVisitorCard()">
+		  	            	<a href="javascript:void(0);">扫描二维码解绑</a>
+		  	            </div> -->
+		  	        </div>
+		  	    </div>
+		    </pane> 
+			<pane content="来访记录" active="false"> 
+			  	<div class="panel-body">
+			  	    <div class="form-horizontal">
+			  	        <div class="form-group">
+			  	            <div class="col-sm-2 col-width-20" style="padding: 0;">
+			  	                <label for="recordName" class="col-sm-3 control-label common-label">姓名&nbsp;</label>
+			  	                <div class="col-sm-9" style="padding: 0;">
+			  	                    <input type='text' class="form-control" id="recordName" ng-model="visitorRecord.recordName"/>
+			  	                </div>
+			  	            </div>
+			  	            <div class="col-sm-2 col-width-20" style="padding: 0;">
+			  	                <label for="realMonitorResult" class="col-sm-3 control-label common-label">性别&nbsp;</label>
+			  	                <div class="col-sm-9" style="padding: 0;">
+    		                        <select ng-model="visitorRecord.gender" class="form-control" id="realMonitorResult">
+        	                            <option value="">未选择</option>
+        	                            <option ng-repeat="item in sexType" value="{{item.binded}}">{{item.sex}}</option>
+        	                        </select>
+			  	                </div>
+				  	        </div>
+			  	            <div class="col-sm-3" style="padding: 0;">
+			  	                <label class="col-sm-3 control-label common-label">登入时间&nbsp;</label>
+			  	                <div class="col-sm-9 input-group date" id="startTime">
+			  	                    <input type='text' class="form-control" id="startTimeInput" ng-model="visitorRecord.startTime"/>
+			  	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			  	                </div>
+			  	            </div>
+			  	            <div class="col-sm-3" style="padding: 0;">
+			  	                <label class="col-sm-3 control-label common-label">登出时间&nbsp;</label>
+			  	                <div class="col-sm-9 input-group date" id="endTime">
+			  	                    <input type='text' class="form-control" id="endTimeInput" ng-model="visitorRecord.endTime"/>
+			  	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			  	                </div>
+			  	            </div>
+			  	            <div class="col-sm-1" style="padding: 0;">
+			  	            	<div class="col-sm-12" style="padding: 0;text-align: center;">
+			  	            	    <button class="btn btn-default" ng-click="recordSearch()">搜索</button>
+			  	            	</div>
+			  	            </div>
+			  	        </div>
+			  	       	<div class="form-group" style="margin-top: 20px;">
+			  	       		<div class="col-sm-2 col-width-20" style="padding: 0;">
+			  	       		    <label for="reason" class="col-sm-3 control-label common-label">来访事由&nbsp;</label>
+			  	       		    <div class="col-sm-9" style="padding: 0;">
+			  	       		        <select ng-model="visitorRecord.reason" class="form-control" id="reason">
+			  	       		            <option value="">未选择</option>
+			  	       		            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+			  	       		        </select>
+			  	       		    </div>
+			  	       		</div>
+			  	            <div class="col-sm-2 col-width-20" style="padding: 0;">
+			  	                <label for="visitedRecordName" class="col-sm-3 control-label common-label">被访人姓名&nbsp;</label>
+			  	                <div class="col-sm-9" style="padding: 0;">
+			  	                    <input type='text' class="form-control" id="visitedRecordName" ng-model="visitorRecord.visitedRecordName"/>
+			  	                </div>
+			  	            </div>
+			  	            <div class="col-sm-3" style="padding: 0;">
+			  	                <label for="status" class="col-sm-3 control-label common-label">状态&nbsp;</label>
+			  	                <div class="col-sm-9" style="padding: 0;">
+			  	                    <select ng-model="visitorRecord.status" class="form-control" id="status">
+			  	                    	<option value="">全部</option>
+			  	                        <option ng-repeat="item in visitorRecord.statusList" value="{{item.binded}}">{{item.status}}</option>
+			  	                    </select>
+			  	                </div>
+			  	            </div>
+			  	        </div>
+			  	    </div>
+			  	</div>
+			  	<div class="table-responsive">
+			  		<div class="loader" style="margin-top: 20px;" ng-show="isLoading"></div>
+			  		<h4 class="searchNoResultTitle" ng-if="visitorRecord.serverPageCount == 0">暂无数据</h4>
+			  	    <table class="table table-hover" ng-if="visitorRecord.list.length > 0">
+			  	        <thead style="background: #dfdfdf;">
+			  	            <tr>
+			  	                <th>宾客姓名</th>
+			  	                <th>性别</th>
+			  	                <th>登入时间</th>
+			  	                <th>登出时间</th>
+			  	                <th>来访事由</th>
+			  	                <th>被访人员</th>
+			  	                <th>状态</th>
+			  	                <th>操作</th>
+			  	            </tr>
+			  	        </thead>
+			  	        <tbody>
+			  	            <tr ng-repeat="item in visitorRecord.list">
+			  	                <td>{{item.name}}</td>
+			  	                <td>{{item.genderText}}</td>
+			  	                <td>{{item.arrivalTime}}</td>
+			  	                <td>{{item.leaveTime}}</td>
+			  	                <td>{{item.reason}}</td>
+			  	                <td>{{item.employeeName}}</td>
+			  	                <td>
+			  	                	<span class="label {{item.permClass}}">{{item.permString}}</span>
+			  	                </td>
+			  	                <td>
+			  	                    <span ng-if="item.status == 0" ><a href="javascript:void(0);" class="handle" ng-click="visitorRecordTrackPress(item,$index)">追踪</a>&nbsp;&nbsp;</span>
+			  	                    <span ng-if="item.status == -1" ><a href="javascript:void(0);" class="handle handle-track" ng-click="visitorRecordTrackPress(item,$index)">轨迹</a>&nbsp;&nbsp;</span>
+			  	                    <a href="javascript:void(0);" class="handle" ng-click="visitorRecordDetailPress(item,$index)">详情</a>
+			  	                </td>
+			  	            </tr>
+			  	        </tbody>
+			  	    </table>
+			  	    <div class="paginatorDiv" ng-hide="visitorRecord.list.length == 0">
+			  	        <ul id="visitorRecord-paginator"></ul>
+			  	    </div>
+			  	</div>
+			</pane>
+		</tabs>
+	</div>
+</div>
+
+<div class="modal fade" id="visitorRecordInfo" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none;padding: 10px 15px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 0 15px;display: flex;">
+            	<div class="visitorInfo">
+            		<p>访客信息</p>
+            		<div>
+            			<div class="leftDiv imgPic">
+            				<img src="img/pic-fangke.png" width="150" id="visitorImg">
+            			</div>
+            			<div class="rightDiv">
+            				<form class="form-horizontal">
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoName" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">姓名&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <input type='text' class="form-control" id="detailInfoName" ng-model="detailInfo.name" disabled/>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoSex" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">性别&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <select ng-model="detailInfo.gender" class="form-control" id="detailInfoSex" disabled>
+    	                            	    <option value="">未选择</option>
+    	                            	    <option ng-repeat="t in sexType" value="{{t.binded}}">{{t.sex}}</option>
+    	                            	</select>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoIDType" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">证件类型&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <select ng-model="detailInfo.certificateType" class="form-control" id="detailInfoIDType" disabled>
+    	                            	    <option value="">未选择</option>
+    	                            	    <option ng-repeat="t in IDTypeList" value="{{t.type}}">{{t.type}}</option>
+    	                            	</select>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoIDNo" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">证件号码&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <input type='text' class="form-control" id="detailInfoIDNo" ng-model="detailInfo.certificateId" disabled/>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoResult" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">来访事由&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <select ng-model="detailInfo.reason" class="form-control" id="detailInfoResult" disabled>
+		    	                            <option value="">未选择</option>
+		    	                            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+		    	                        </select>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoVisitorType" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">人员类型&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <select ng-model="detailInfo.personType" class="form-control" id="detailInfoVisitorType" disabled>
+		    	                            <option value="">未选择</option>
+		    	                            <option ng-repeat="item in visitorTypeList" value="{{item.type}}">{{item.type}}</option>
+		    	                        </select>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoVisitorNum" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">来访时间&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <input type='text' class="form-control" id="detailInfoVisitorNum" ng-model="detailInfo.arrivalTime" disabled/>
+				                    </div>
+				                </div>
+				                <div class="form-group" style="margin-bottom: 15px;">
+				                    <label for="detailInfoMobilePhone" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">联系电话&nbsp;</label>
+				                    <div class="col-sm-9" style="padding: 0;">
+				                        <input type='text' class="form-control" id="detailInfoMobilePhone" ng-model="detailInfo.visitorMobileNumber" disabled/>
+				                    </div>
+				                </div>
+				            </form>
+            			</div>
+            		</div>
+            	</div>
+            	<div class="visitedInfo">
+            		<p>被访人信息</p>
+    				<form class="form-horizontal">
+		                <div class="form-group" style="margin-bottom: 15px;">
+		                    <label for="detailInfoVisitedName" class="col-sm-3 control-label common-label">姓名&nbsp;</label>
+		                    <div class="col-sm-9" style="padding: 0;">
+		                        <input type='text' class="form-control" id="detailInfoVisitedName" ng-model="detailInfo.employeeName" disabled/>
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin-bottom: 15px;">
+		                    <label for="detailInfoDeptName" class="col-sm-3 control-label common-label">部门&nbsp;</label>
+		                    <div class="col-sm-9" style="padding: 0;">
+		                        <input type='text' class="form-control" id="detailInfoVisitedName" ng-model="detailInfo.dept" disabled/>
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin-bottom: 15px;">
+		                    <label for="detailInfoRoomNo" class="col-sm-3 control-label common-label">房间&nbsp;</label>
+		                    <div class="col-sm-9" style="padding: 0;">
+		                        <input type='text' class="form-control" id="detailInfoRoomNo" ng-model="detailInfo.room" disabled/>
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin-bottom: 15px;">
+		                    <label for="detailInfoExtPhone" class="col-sm-3 control-label common-label">分机&nbsp;</label>
+		                    <div class="col-sm-9" style="padding: 0;">
+		                        <input type='text' class="form-control" id="detailInfoExtPhone" ng-model="detailInfo.extension" disabled/>
+		                    </div>
+		                </div>
+		                <div class="form-group" style="margin-bottom: 15px;">
+		                    <label for="detailInfoVisitedPhone" class="col-sm-3 control-label common-label">电话&nbsp;</label>
+		                    <div class="col-sm-9" style="padding: 0;">
+		                        <input type='text' class="form-control" id="detailInfoVisitedPhone" ng-model="detailInfo.employeeMobilePhone" disabled/>
+		                    </div>
+		                </div>
+		            </form>
+            	</div>
+            </div>
+            <div class="modal-footer" style="border: none;text-align: right;padding: 30px 20px;">
+                <button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="logoutInfo" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none;padding: 10px 15px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                	是否登出？
+                </h4>
+            </div>
+            <div class="modal-body" style="padding: 0 15px;display: flex;">
+        		<div style="width: 80%;margin: 0px auto;margin-top: 20px;">
+        			<div class="leftDiv imgPic">
+        				<img src="img/pic-fangke.png" width="150" id="logoutVisitorImg">
+        			</div>
+        			<div class="rightDiv" style="width: 300px;margin-left: 50px;">
+        				<form class="form-horizontal">
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="detailInfoName" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">姓名&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <input type='text' class="form-control" id="detailInfoName" ng-model="logoutInfo.visitor.name" disabled/>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoIDType" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">证件类型&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <select ng-model="logoutInfo.visitor.certificateType" class="form-control" id="logoutInfoIDType" disabled>
+	                            	    <option value="">未选择</option>
+	                            	    <option ng-repeat="t in IDTypeList" value="{{t.type}}">{{t.type}}</option>
+	                            	</select>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoIDNo" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">证件号码&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <input type='text' class="form-control" id="logoutInfoIDNo" ng-model="logoutInfo.visitor.certificateId" disabled/>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoResult" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">来访事由&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <select ng-model="logoutInfo.visitor.reason" class="form-control" id="logoutInfoResult" disabled>
+	    	                            <option value="">未选择</option>
+	    	                            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+	    	                        </select>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoVisitorType" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">人员类型&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <select ng-model="logoutInfo.visitor.personType" class="form-control" id="logoutInfoVisitorType" disabled>
+	    	                            <option value="">未选择</option>
+	    	                            <option ng-repeat="item in visitorTypeList" value="{{item.type}}">{{item.type}}</option>
+	    	                        </select>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoVisitorNum" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">来访时间&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <input type='text' class="form-control" id="logoutInfoVisitorNum" ng-model="logoutInfo.visitor.arrivalTime" disabled/>
+			                    </div>
+			                </div>
+			                <div class="form-group" style="margin-bottom: 15px;">
+			                    <label for="logoutInfoMobilePhone" class="col-sm-3 control-label common-label" style="text-align: left!important;margin-right: 0px;">联系电话&nbsp;</label>
+			                    <div class="col-sm-9" style="padding: 0;">
+			                        <input type='text' class="form-control" id="logoutInfoMobilePhone" ng-model="logoutInfo.visitor.phoneNumber" disabled/>
+			                    </div>
+			                </div>
+			            </form>
+        			</div>
+        		</div>
+            </div>
+            <div class="modal-footer" style="border: none;text-align: right;padding: 30px 20px;" ng-if="logoutInfo.times > 0">
+            	<h4 style="text-align: center;margin-bottom: 30px;">此访客触发
+            		<span style="font-size: 22px;color: red">&nbsp;{{logoutInfo.times}}次&nbsp;</span>
+            		报警
+            		<span style="color: red">&nbsp;未处理&nbsp;</span>
+            	</h4>
+            	<h4 style="text-align: center;margin-bottom: 30px;">
+            		<input type="text" class="form-control" placeholder="请输入处理信息" ng-model="logout.handleMsg" style="width: 35%;margin: 0 auto;">
+            	</h4>
+            	<div style="text-align: center;">
+            		<button type="button" style="padding:6px 25px;" class="btn btn-danger" ng-click="gotoAlarmView()">报警详情</button>
+            		<button type="button" style="padding:6px 25px;" class="btn btn-default" ng-click="dealAndLogout()">处理并登出</button>
+            	</div>
+            </div>
+            <div class="modal-footer" style="border: none;text-align: right;padding: 30px 20px;" ng-if="logoutInfo.times == 0">
+            	<div style="text-align: center;">
+            		<button type="button" style="padding:6px 25px;" class="btn btn-primary" ng-click="dealAndLogout()">确定</button>
+            		<button type="button" style="padding:6px 25px;" class="btn btn-default" data-dismiss="modal">取消</button>
+            	</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="scanIDCard" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none;padding: 15px 15px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 0 15px;display: flex;">
+            	<video width="375" height="281" id="myVideo"></video>
+            	<canvas width="375" height="281" id="myCanvas"></canvas>
+            </div>
+            <div class="modal-footer" style="border: none;text-align: right;padding: 30px 20px;">
+            	<button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-primary" ng-click="screenShotPress()">截图</button>
+                <button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-primary" ng-click="saveScreenPress()">保存</button>
+                <button type="button" style="padding:6px 25px;margin: 0px 6px;" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="batchUnbindSN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">批量解绑标签</h4>
+		</div>
+		<div class="modal-body">
+			<div style="margin-bottom: 20px;">
+			    <input type="file" style="width: 70px;display: none;" id="file" name="file" class="file" onchange="angular.element(this).scope().handleFiles(this)"/>
+			    <button type="button" class="btn btn-default" id="addDeviceButton" ng-click="upDownloadFile()">上传文件(.xls)</button><span id="text" style="padding:0 12px;line-height: 36px;"></span>
+			</div>
+			<div style="margin-bottom: 20px;">
+			    <button type="button" class="btn btn-default" id="addDeviceButton" ng-click="downLoadTemplate()">下载模板</button>
+			</div>
+			<p class="errorMsg">{{errorMessage}}</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			<button type="button" class="btn btn-primary" ng-click="submit()">提交</button>
+		</div>
+    </div>
+  </div>
+</div>

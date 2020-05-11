@@ -1,0 +1,40 @@
+<div class="blackListWrap clearfix">
+	<div class="blackListWord">黑名单访客列表</div>
+	<div class="blackListSearch">
+		<input type="text" name="text" placeholder="访客姓名/证件号/手机号" ng-model="blackListQuery.blackListSearchContent" ng-keyup="enterEvent($event)">
+		<span class="glyphicon glyphicon-search blackListSearchIcon" ng-click="blackListSearchPress()"></span>
+	</div>
+</div>
+<div class="table-responsive">
+	<div class="loader" style="margin-top: 20px;" ng-show="isLoading"></div>
+	<h4 class="searchNoResultTitle" ng-if="blackListQuery.serverPageCount == 0">暂无数据</h4>
+	<table class="table table-hover" ng-if="blackListQuery.list.length > 0">
+		<thead style="background: #dfdfdf;">
+			<tr>
+				<th>宾客姓名</th>
+				<th>性别</th>
+				<th>证件号码</th>
+				<th>来访事由</th>
+				<th>手机号码</th>
+				<th>到访时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="black in blackListQuery.list">
+				<td>{{black.name}}</td>
+				<td>{{black.gender}}</td>
+				<td>{{black.id}}</td>
+				<td>{{black.reason}}</td>
+				<td>{{black.mobileNumber}}</td>
+				<td>{{black.arrivalTime}}</td>
+				<td>
+					<a href="javascript:void(0);" class="handle" ng-click="blackListHandle(black,$index)">移除</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paginatorDiv" ng-hide="blackListQuery.list.length == 0">
+	    <ul id="blackList-paginator"></ul>
+	</div>
+</div>

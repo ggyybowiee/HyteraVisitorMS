@@ -1,0 +1,120 @@
+<div class="js-content visitorPermission">
+    <h3 class="js-content-title">新建访客权限</h3>
+    <button type="button" class="btn btn-default" aria-label="Close" style="margin-top: -130px;margin-left: 30px;" ng-click="navBackPress();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+
+    <div class="form-horizontal">
+    	<div class="form-group">
+    		<label class="col-sm-3 col-md-2 control-label" for="name">权限名称<span class="errorMsg"> *</span></label>
+    		<div class="col-sm-3">
+    			<input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="一般权限" ng-model="addVisitorPermission.name" id="name">
+    		</div>
+    	</div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">报警围栏配置</label>
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">越界报警</div>
+                    <div class="panel-body">
+                        <div class="checkbox">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>区域名称</th>
+                                        <th>进入报警</th>
+                                        <th>离开报警</th>
+                                        <th>查看位置</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in overBoundaryAlarmList">
+                                    <th>{{$index+1}}</th>
+                                    <th>{{item.railName}}</th>
+                                    <th>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-checked="item.inAlarm" ng-click="inAlarmChanged(item)">
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-checked="item.outAlarm" ng-click="outAlarmChanged(item)">
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <button type="button" class="btn btn-default btn-sm" ng-click="checkRailPosition(item)">
+                                            <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                        </button>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">滞留报警</div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>选择</th>
+                                <th>区域名称</th>
+                                <th>滞留时间/s</th>
+                                <th>查看位置</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in stopAlarmList">
+                                <th>{{$index+1}}</th>
+                                <th>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-checked="item.choose" ng-click="chooseChanged(item)">
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>{{item.railName}}</th>
+                                <th>{{item.stopLimitSeconds}}</th>
+                                <th>
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="checkRailPosition(item)">
+                                        <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </button>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div style="width: 100%; text-align: center; margin-bottom: 40px;margin-top: 50px;">
+        <p class="errorMsg" ng-bind="errorMessage"></p>
+        <button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress();">保存</button>
+        <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress();">取消</button>
+    </div>
+</div>
+
+<div class="modal fade" id="railPositionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">围栏位置</h4>
+      </div>
+      <div class="modal-body">
+        <div id="railFengMap" style="height: 500px;overflow: hidden;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>

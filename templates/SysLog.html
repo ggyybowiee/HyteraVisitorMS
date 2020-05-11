@@ -1,0 +1,55 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)">
+			<pane content="日志查询" active="true"> 
+			  	<div class="form-horizontal">
+			  	    <div class="form-group">
+			  	    	<div class="col-sm-12 visitorConfigSearch">
+			  	    		<input type="text" name="text" placeholder="请输入搜索内容" ng-model="sysLogQuery.searchListName" ng-keyup="enterEvent($event)">
+			  	    		<span class="glyphicon glyphicon-search" ng-click="searchPress()"></span>
+			  	    	</div>
+			  	    </div>
+			  	   	<div class="form-group" style="margin-top: 10px;">
+			  	   		<div class="col-sm-12 clearfix">
+			  	   			<div style="float: left;">
+			  	   				<label for="logType" class="control-label common-label">日志类型</label>
+			  	   				<select ng-model="sysLogQuery.logType" ng-change="logTypeChangePress()" class="form-control" id="logType" style="display: inline-block;width: auto;">
+			  	   				    <option ng-repeat="item in logTypeList" value="{{item.type}}">{{item.text}}</option>
+			  	   				</select>
+			  	   			</div>
+			  	   		</div>
+			  	    </div>
+			  	</div>
+			  	<div class="table-responsive" style="margin-top: 15px;">
+			  		<div class="loader" style="margin-top: 0;" ng-show="isLoading"></div>
+			  		<h4 class="searchNoResultTitle" ng-if="systemLogResult.totalCount == 0">暂无数据</h4>
+			  	    <table class="table table-hover" ng-if="systemLogResult.recordList.length > 0">
+			  	        <thead style="background: #dfdfdf;">
+			  	            <tr>
+			  	                <th width="20%">时间</th>
+			  	    	        <th width="15%">用户</th>
+			  	    	        <th width="15%">日志类型</th>
+			  	    	        <th width="50%">详细说明</th>
+			  	            </tr>
+			  	        </thead>
+			  	        <tbody>
+			  	            <tr ng-repeat="item in systemLogResult.recordList">
+			  	                <td>{{item.time}}</td>
+			  	                <td>{{item.username}}</td>
+			  	                <td>{{item.type}}</td>
+			  	                <td class="moretext" style="text-align: left;" title="{{item.details}}">{{item.details}}</td>
+			  	            </tr>
+			  	        </tbody>
+			  	    </table>
+			  	    <nav>
+			  	        <ul class="pager" ng-hide="systemLogResult.recordList.length == 0">
+			  	            <li class="previous"><a ng-click="systemLogListPreviousPress()">上一页</a></li>
+			  	            <span style="vertical-align: -webkit-baseline-middle;color: #000;">当前第{{systemLogCondition.page}}页 | 每页{{systemLogCondition.rows}}条 | 共{{systemLogResult.totalCount}}条</span>
+			  	            <li class="next"><a ng-click="systemLogListNextPress()">下一页</a></li>
+			  	        </ul>
+			  	    </nav>
+			  	</div>
+			</pane>
+		</tabs>
+	</div>
+</div>

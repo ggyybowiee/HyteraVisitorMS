@@ -1,0 +1,58 @@
+<div class="panel-body" style="padding: 20px 15px;">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2" style="padding: 0;width: 15%;">
+                <label for="historyTrackPlayName" class="col-sm-3 control-label common-label">证件号&nbsp;</label>
+                <div class="col-sm-9" style="padding: 0;">
+                    <input type='text' class="form-control" id="visitorNum" ng-model="historyTrackPlay.id"/>
+                </div>
+            </div>
+            <div class="col-sm-2" style="padding: 0;width: 25%;">
+                <label class="col-sm-3 control-label common-label">日期&nbsp;</label>
+                <div class="col-sm-9 input-group date" id="dateTime">
+                    <input type='text' class="form-control" id="dateTimeInput" ng-model="historyTrackPlay.dateTime" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding: 0;">
+                <label class="col-sm-3 control-label common-label" style="width: 20%;">开始时间&nbsp;</label>
+                <div class="col-sm-8 input-group date" id="startTimeHour">
+                    <input type='text' class="form-control" id="startTimeHourInput" ng-model="historyTrackPlay.startTime" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding: 0;">
+                <label class="col-sm-3 control-label common-label" style="width: 20%;">结束时间&nbsp;</label>
+                <div class="col-sm-8 input-group date" id="endTimeHour">
+                    <input type='text' class="form-control" id="endTimeHourInput" ng-model="historyTrackPlay.endTime" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-sm-1" style="padding: 0;">
+                <div class="col-sm-12" style="padding: 0;text-align: center;">
+                    <button class="btn btn-default" ng-click="historyTrackPlaySearch()">搜索</button>
+                </div>
+            </div>
+        </div>
+        <p class="errorMsg" style="margin: 0px;">{{historyTrackPlay.errorMessage}}</p>
+    </div>
+</div>
+<div id="historyFengMap"></div>
+<span id="historyElecRail" ng-click="elecRailToggle()" class="{{isShowRail ? 'railBlack' : 'railBlue'}}"></span>
+<div class="playPart" ng-show="clickedSearch">
+    <div id="time">
+        <a href="javascript:void(0);" class="cur_time" id="cur_time">
+	        <span></span>
+	        <span></span>
+	    </a>
+        <span>00:00</span>
+        <a href="javascript:void(0);" class="playPrevious" title="快退" ng-click="playPrevious()"></a>
+        <a href="javascript:void(0);" class="playBtn stop" title="暂停" ng-if="isPause" ng-click="stop()"></a>
+        <a href="javascript:void(0);" class="playBtn play" title="播放" ng-if="!isPause" ng-click="play()"></a>
+        <a href="javascript:void(0);" class="playNext" title="快进" ng-click="playNext()"></a>
+        <span>00:00</span>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="block">
+	<div class="content">
+		<tabs change-id="changeData(changeId)"> 
+		    <pane content="预约通知" active="true"> 
+		    	<div ui-view="reservationView"></div>
+		    </pane> 
+		    <pane content="黑名单管理" active="false">
+		    	<div ui-view="blackListView"></div>
+		    </pane> 
+		</tabs>	
+	</div>
+</div>

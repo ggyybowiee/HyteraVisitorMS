@@ -1,0 +1,113 @@
+<div class="js-content">
+    <h3 class="js-content-title">{{title}}</h3>
+    <button type="button" class="btn btn-default" aria-label="Close" style="margin-top: -130px;margin-left: 30px;" ng-click="navBackPress();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="railName" class="col-sm-3 col-md-2 control-label">区域名称<span class="errorMsg"> *</span></label>
+            <div class="col-sm-9">
+                <input type="text" id="railName" class="form-control" placeholder="区域名称" ng-model="field.railName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">围栏报警类型</label>
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="field.overBoundaryAlarm"> 越界报警
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="field.stopAlarm"> 滞留报警
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="field.stopAlarm">
+                        <div class="form-group" style="margin: 0;">
+                            <label for="input22">滞留多少时间报警(单位：秒)<span class="errorMsg"> *</span></label>
+                            <input type="number" class="form-control" ng-model="field.stopLimitSeconds">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">生效时间<span class="errorMsg"> *</span></label>
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox" style="padding-top: 0;">
+                            <button class="btn btn-default" ng-click="addTimePeriod()">添加时间段</button>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group" ng-repeat="item in timePeriods">
+                    <div class="col-sm-12" style="margin-top: 10px;margin-right: -15px;margin-left: -15px;">
+                        <div class="col-sm-4">
+                            <div class="col-sm-12 input-group date" id="startTime{{$index}}" style="padding-left: 0;">
+                                <input type='text' class="form-control" style="visibility: hidden;position: absolute;" />
+                                <input type='text' class="form-control" ng-model="item.begin" placeholder="开始时间" id="startInputTime{{$index}}"/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12 input-group date" id="endTime{{$index}}" style="padding-left: 0;">
+                                <input type='text' class="form-control" style="visibility: hidden;position: absolute;" />
+                                <input type='text' class="form-control" ng-model="item.end" placeholder="结束时间" id="endInputTime{{$index}}"/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-default" style="margin-left: 10px;" ng-click="deleteTimePeriod($index)">删除</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="checkbox-inline" ng-repeat="date in item.week" style="margin-right: 10px;">
+                            <input type="checkbox" value="{{date.index}}" ng-checked="date.selected" ng-click="cameraChanged(date)"><span style="margin:0;word-break: break-all;">{{date.name}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">关联围栏区域<span class="errorMsg"> *</span></label>
+            <div class="col-sm-9">
+                <div class="col-sm-12" style="padding: 0;">
+                    <button class="btn btn-default" type="button" ng-click="startDraw()">开始画</button>
+                    <button class="btn btn-default" type="button" ng-click="endDraw()">结束画</button> 
+                </div>
+                <div class="col-sm-12" style="padding: 0;">
+                    <div id="addFieldfengMap" class="addFieldfengMap" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <div style="width: 100%; text-align: center; margin-bottom: 40px;margin-top: 50px;">
+        <p class="errorMsg">{{errorMessage}}</p>
+        <button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress();">保存</button>
+        <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress();">取消</button>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog modal-lg" role="document" style="position: fixed;top: 50%;transform: translateY(-50%);width: 100vw;margin: 0 auto;">
+        <div class="modal-content" style="border:none;box-shadow: none;background-color: transparent;">
+            <div class="modal-body body-animate">
+                <span id="modalText">地图加载中</span><span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span>
+            </div>
+        </div>
+    </div>
+</div>

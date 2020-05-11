@@ -1,0 +1,34 @@
+<div>
+	<div class="noticeWrap clearfix">
+		<div class="noticeListWord">现有账户</div>
+		<div class="noticeListSearch">
+			<button class="btn btn-primary" style="padding: 6px 20px;" ng-click="accountConfigAddPress()"><span class="glyphicon glyphicon-plus" style="padding-right: 5px"></span>新建</button>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<div class="loader" style="margin-top: 0;" ng-show="isLoading"></div>
+		<h4 class="searchNoResultTitle" ng-if="accountConfig.serverPageCount == 0">暂无数据</h4>
+		<table class="table table-hover" ng-if="accountConfig.list.length > 0">
+			<thead style="background: #dfdfdf;">
+				<tr>
+					<th>账户名称</th>
+					<th>账户权限</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in accountConfig.list">
+					<td>{{item.name}}</td>
+					<td>{{item.type}}</td>
+					<td>
+						<a href="javascript:void(0);" class="handle handle-delete" ng-click="accountConfigDeletePress(item)">删除</a>&nbsp;&nbsp;
+						<a href="javascript:void(0);" class="handle" ng-click="accountConfigEditPress(item)">编辑</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="paginatorDiv" ng-hide="accountConfig.list.length == 0">
+		    <ul id="accountList-paginator"></ul>
+		</div>
+	</div>
+</div>

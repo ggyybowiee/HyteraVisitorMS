@@ -1,0 +1,157 @@
+<div class="noticeWrap clearfix">
+	<div class="noticeListWord">新建预约列表</div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        1.被访人员
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 col-width-20" style="padding: 0;">
+                    <label for="visitedName" class="col-sm-3 control-label common-label">姓名<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="visitedName" ng-model="createReservation.employeeName"/>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-width-20" style="padding: 0;">
+                    <label for="deptName" class="col-sm-3 control-label common-label">部门&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="deptName" ng-model="createReservation.dept"/>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-width-20" style="padding: 0;">
+                    <label for="roomNo" class="col-sm-3 control-label common-label">房间&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="roomNo" ng-model="createReservation.room"/>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-width-20" style="padding: 0;">
+                    <label for="extPhone" class="col-sm-3 control-label common-label">分机&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="extPhone" ng-model="createReservation.extension"/>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-width-20" style="padding: 0;">
+                    <label for="mobilePhone" class="col-sm-3 control-label common-label">手机&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="mobilePhone" ng-model="createReservation.employeeMobilePhone"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        2.来访内容
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="permission" class="col-sm-3 control-label common-label">访客权限<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <select ng-model="createReservation.permissionId" class="form-control" id="permission">
+                            <option value="">未选择</option>
+                            <option ng-repeat="item in permissionList" value="{{item.id}}">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="visitorNum" class="col-sm-3 control-label common-label">来访人数<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='number' class="form-control" id="visitorNum" ng-model="createReservation.nums"/>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="visitorResult" class="col-sm-3 control-label common-label">来访事由<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <select ng-model="createReservation.reason" class="form-control" id="visitorResult">
+                            <option value="">未选择</option>
+                            <option ng-repeat="item in reasonList" value="{{item.reason}}">{{item.reason}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label for="visitorType" class="col-sm-3 control-label common-label">人员类型&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <select ng-model="createReservation.personType" class="form-control" id="visitorType">
+                            <option value="">未选择</option>
+                            <option ng-repeat="item in visitorTypeList" value="{{item.type}}">{{item.type}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <div class="col-sm-3" style="padding: 0;">
+                    <label class="col-sm-3 control-label common-label" for="appointmentTime">预约时间<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-9 input-group date" id="appointmentTime">
+                        <input type='text' class="form-control" id="appointmentTimeInput" ng-model="createReservation.appointTime"/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0;">
+                    <label class="col-sm-3 control-label common-label" for="stopTime">停留时间<span class="errorMsg"> *</span>&nbsp;</label>
+                    <div class="col-sm-6" style="padding: 0;">
+                        <input type='number' class="form-control" id="stopTime" ng-model="createReservation.stopHour"/><span style="display: inline-block;"></span>
+                    </div>
+                    <label class="col-sm-3 control-label common-label" style="text-align: left !important;">&nbsp;(h)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        3.来访人员
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3 col-width-20" style="padding: 0;">
+                    <label for="visitorName" class="col-sm-3 control-label common-label">姓名<span class="errorMsg"> *</span>&nbsp;&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="visitorName" ng-model="createReservation.visitorName"/>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-width-20" style="padding: 0;">
+                    <label for="visitorSex" class="col-sm-3 control-label common-label">性别&nbsp;&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <select ng-model="createReservation.visitorSex" class="form-control" id="visitorSex">
+                    	    <option value="">未选择</option>
+                    	    <option ng-repeat="t in sexType" value="{{t.binded}}">{{t.sex}}</option>
+                    	</select>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-width-20" style="padding: 0;">
+                    <label for="visitorIDType" class="col-sm-3 control-label common-label">证件类型&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <select ng-model="createReservation.certificateType" class="form-control" id="visitorIDType">
+                    	    <option value="">未选择</option>
+                    	    <option ng-repeat="t in IDTypeList" value="{{t.type}}">{{t.type}}</option>
+                    	</select>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-width-20" style="padding: 0;">
+                    <label for="visitorIDCard" class="col-sm-3 control-label common-label">证件号码&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="visitorIDCard" ng-model="createReservation.certificateId"/>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-width-20" style="padding: 0;">
+                    <label for="visitorMobilePhone" class="col-sm-3 control-label common-label">手机&nbsp;</label>
+                    <div class="col-sm-9" style="padding: 0;">
+                        <input type='text' class="form-control" id="visitorMobilePhone" ng-model="createReservation.visitorMobilePhone"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; text-align: center; margin: 50px 0px 30px 0px;">
+  	<p class="errorMsg">{{errorMessage}}</p>
+  	<button type="button" class="btn btn-primary" style="width: 80px;" ng-click="savePress()">保存</button>
+  	<button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress()">取消</button>
+</div>

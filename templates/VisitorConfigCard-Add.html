@@ -1,0 +1,39 @@
+<div class="js-content-full">
+	<div class="js-content">
+		<h3 class="js-content-title">新建访客牌</h3>
+        <button type="button" class="btn btn-default" aria-label="Close" style="margin-top: -130px;margin-left: 30px;" ng-click="navBackPress();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+		<div class="form-horizontal">
+			<!-- <div class="form-group" style="margin-bottom: 0px;">
+				<label class="col-sm-3 col-md-2 control-label"></label>
+				<div class="col-sm-6" style="text-align: center;">
+					<p class="scanNewP">扫描新建</p>
+					<div class="scanDiv" ng-click="scanPress()">
+						<span>开始扫描</span>
+					</div>
+				</div>
+				<div class="col-sm-3"></div>
+			</div> -->
+			<div class="form-group" style="margin-bottom: 30px;">
+				<label class="col-sm-3 col-md-2 control-label"></label>
+				<div class="col-sm-6"></div>
+				<div class="col-sm-3">
+				    <button class="btn btn-default" ng-click="addSn()">添加标签</button>
+				</div>
+			</div>
+			<div class="form-group" ng-repeat="item in snList">
+			    <label class="col-sm-3 col-md-2 control-label">SN{{$index+1}}<span class="errorMsg"> *</span></label>
+			    <div class="col-sm-6">
+			        <input type="text" class="form-control" placeholder="SN" ng-model="item.sn">
+			    </div>
+			    <div class="col-sm-3">
+			        <button class="btn btn-danger" ng-click="deleteSn($index)">删除</button>
+			    </div>
+			</div>
+		</div>
+		<div style="width: 100%; text-align: center; margin-bottom: 40px;margin-top: 50px;">
+			<p class="errorMsg">{{errorMessage}}</p>
+		    <button type="button" class="btn btn-primary fullBgColorButtonBlue" style="width: 80px;" ng-click="savePress();">保存</button>
+		    <button type="button" class="btn btn-default" style="width: 80px;" ng-click="canclePress();">取消</button>
+		</div>
+	</div>
+</div>
